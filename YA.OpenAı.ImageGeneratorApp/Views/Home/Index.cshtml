@@ -1,0 +1,41 @@
+﻿@model YourNamespace.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <h1>@Model.Prompt</h1>
+    <p>Image Count: @Model.ImageCount</p>
+
+    <form asp-controller="Home" asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="prompt">Prompt:</label>
+            <input type="text" class="form-control" id="prompt" name="Prompt" value="@Model.Prompt" />
+        </div>
+        <div class="form-group">
+            <label for="imageCount">Image Count:</label>
+            <input type="number" class="form-control" id="imageCount" name="ImageCount" value="@Model.ImageCount" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+@if (Model.ImagesUrls is not null && Model.ImagesUrls.Any())
+{
+    <div class="row">
+        @foreach (var imageUrl in Model.Images)
+        {
+            <div class="col-md-3">
+                <img src="@imageUrl" alt="Image" class="img-fluid" />
+            </div>
+        }
+    </div>
+}
+@if(!string.IsNullOrEmpty(Model.ChatGPTResponse))
+{
+    <div class="row">
+        <testarea class="form-control" rows="3" cols="3" readonly="readonly" asp-for="ChatGPTResponse"></testarea>
+
+}
+</div>
